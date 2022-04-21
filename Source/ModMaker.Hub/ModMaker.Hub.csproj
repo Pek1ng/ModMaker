@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="HandyControl" Version="3.3.0" />
+		<PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Page Include="App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+			<ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Plugin\ProjectZomboid\ProjectZomboid.csproj" />
+	  <ProjectReference Include="..\ModMaker.Common\ModMaker.Common.csproj" />
+	  <ProjectReference Include="..\ModMaker.Editor\ModMaker.Editor.csproj" />
+	</ItemGroup>
+
+</Project>
