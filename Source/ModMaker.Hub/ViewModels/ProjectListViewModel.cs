@@ -7,10 +7,7 @@ using System.Collections.Generic;
 using ModMaker.Common.Models;
 using ModMaker.Common.Helpers;
 using System.Windows;
-using Prism.Regions;
-using ModMaker.Hub.Views;
 using Prism.Services.Dialogs;
-using ModMaker.Controls;
 
 namespace ModMaker.Hub.ViewModels
 {
@@ -18,7 +15,6 @@ namespace ModMaker.Hub.ViewModels
     {
         private readonly IContainerExtension _container;
         private readonly IDialogService _dialogService;
-        private readonly IRegionManager _regionManager;
 
         private IList<Project> _projects = new List<Project>();
 
@@ -28,11 +24,10 @@ namespace ModMaker.Hub.ViewModels
 
         public Project? SelectedBuilder;
 
-        public ProjectListViewModel(IContainerExtension container, IRegionManager regionManager, IDialogService dialogService)
+        public ProjectListViewModel(IContainerExtension container, IDialogService dialogService)
         {
             _container = container;
             _dialogService = dialogService;
-            _regionManager = regionManager;
 
             Projects = ProjectHelper.GetProjects();
         }
@@ -102,9 +97,15 @@ namespace ModMaker.Hub.ViewModels
         /// </summary>
         private void CreateProject()
         {
-            _dialogService.Show(null, null, null, "DialogWindow");
+            System.Action<IDialogResult> action = (r) =>
+            {
+                if (r.Result == ButtonResult.OK)
+                {
+                    Projects = ProjectHelper.GetProjects();
+                }
+            };
 
-            _regionManager.RegisterViewWithRegion("DialogWindowContent", typeof(NewProjectView));
+            _dialogService.ShowDialog("NewProjectView", null, action, "DialogWindow");
         }
 
         /// <summary>

@@ -18,4 +18,9 @@
 			<ContainsDesignTimeResources>true</ContainsDesignTimeResources>
 		</Page>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Events\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
 </Project>

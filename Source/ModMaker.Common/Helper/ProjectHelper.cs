@@ -1,4 +1,5 @@
-﻿using ModMaker.Common.Helper;
+﻿using HandyControl.Controls;
+using ModMaker.Common.Helper;
 using ModMaker.Common.Models;
 using ModMaker.Sdk;
 using System.Collections.Generic;
@@ -15,13 +16,13 @@ namespace ModMaker.Common.Helpers
         /// <param name="ItemName">选用模板的名字</param>
         /// <param name="ProjectName">创建的项目名</param>
         /// <returns>是否创建成功</returns>
-        public static bool CreatProject(string projectName, IBuilder builder, ref string errorMessage)
+        public static bool CreatProject(string projectName, IBuilder builder)
         {
             string projectPath = @$"Projects\{ projectName}";
 
             if (Directory.Exists(projectPath))
             {
-                errorMessage = $"项目已存在\"{projectName}\"";
+                MessageBox.Show($"项目已存在\"{projectName}\"");
 
                 return false;
             }

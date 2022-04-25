@@ -11,25 +11,29 @@ using System.Collections.Generic;
 
 namespace ModMaker.Hub.ViewModels
 {
-    public class NewProjectViewModel : BindableBase
+    public class NewProjectViewModel : BindableBase, IDialogAware
     {
-        private IContainerExtension _container;
         private string _projectName = "MyMod";
         private int _selectedIndex;
 
         public NewProjectViewModel(IContainerExtension container)
         {
-            _container = container;
-
             Builders = PluginHelper.GetPlugins<IBuilder>();
+
+            CancelCommand = new DelegateCommand(Cancel);
+            ConfirmCommand = new DelegateCommand(Confirm);
         }
+
+        public event Action<IDialogResult>? RequestClose;
+
+        public DelegateCommand CancelCommand { get; set; }
+
+        public DelegateCommand ConfirmCommand { get; set; }
 
         /// <summary>
         /// 模组模板列表
         /// </summary>
         public IList<IBuilder> Builders { get; set; }
-
-        public DelegateCommand CreateCommand => new(Create);
 
         /// <summary>
         /// 要创建的项目名
@@ -62,10 +66,14 @@ namespace ModMaker.Hub.ViewModels
             set { _selectedIndex = value; }
         }
 
-        /// <summary>
-        /// 创建项目
-        /// </summary>
-        private void Create()
+        public string? Title { get; set; }
+
+        private void Cancel()
+        {
+            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+        }
+
+        private void Confirm()
         {
             //未选择模板
             if (SelectedIndex == -1)
@@ -74,13 +82,25 @@ namespace ModMaker.Hub.ViewModels
                 return;
             }
 
-            string errorMessage = "";
-
-            if (!ProjectHelper.CreatProject(ProjectName, SelectedBuilder, ref errorMessage))
+            if (!ProjectHelper.CreatProject(ProjectName, SelectedBuilder))
             {
-                MessageBox.Show(errorMessage);
                 return;
             }
+
+            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+        }
+
+        public bool CanCloseDialog()
+        {
+            return true;
+        }
+
+        public void OnDialogClosed()
+        {
+        }
+
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
         }
     }
 }

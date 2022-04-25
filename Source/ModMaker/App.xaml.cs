@@ -1,5 +1,4 @@
-﻿using ModMaker.Controls.ViewModels;
-using ModMaker.Controls.Views;
+﻿using ModMaker.Controls.Views;
 using ModMaker.Hub.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
@@ -23,7 +22,7 @@ namespace ModMaker.Hub
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterDialogWindow<DialogWindow>("DialogWindow");
-            containerRegistry.RegisterDialog<DIalogAwareView>();
+            containerRegistry.RegisterDialog<NewProjectView>();
         }
     }
 }
