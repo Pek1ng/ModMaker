@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ModMaker.Common.Views
+namespace ModMaker.Hub.Views
 {
     /// <summary>
     /// CreatNewProject.xaml 的交互逻辑

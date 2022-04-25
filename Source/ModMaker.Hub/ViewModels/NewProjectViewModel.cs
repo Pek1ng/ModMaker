@@ -1,16 +1,15 @@
 ﻿using HandyControl.Controls;
 using ModMaker.Common.Helper;
 using ModMaker.Common.Helpers;
-using ModMaker.Common.Views;
 using ModMaker.Sdk;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
-using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 
-namespace ModMaker.Common.ViewModels
+namespace ModMaker.Hub.ViewModels
 {
     public class NewProjectViewModel : BindableBase
     {
@@ -23,9 +22,6 @@ namespace ModMaker.Common.ViewModels
             _container = container;
 
             Builders = PluginHelper.GetPlugins<IBuilder>();
-
-            var v = _container.Resolve<BaseDialogView>();
-            BaseDialogViewModel.Command1 = CreateCommand;
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using ModMaker.Common.Views;
-using ModMaker.Editor.ViewModels;
+﻿using ModMaker.Editor.ViewModels;
 using ModMaker.Editor.Views;
 using Prism.Commands;
 using Prism.Ioc;
@@ -8,25 +7,31 @@ using System.Collections.Generic;
 using ModMaker.Common.Models;
 using ModMaker.Common.Helpers;
 using System.Windows;
-using ModMaker.Common.ViewModels;
 using Prism.Regions;
+using ModMaker.Hub.Views;
+using Prism.Services.Dialogs;
+using ModMaker.Controls;
 
 namespace ModMaker.Hub.ViewModels
 {
     public class ProjectListViewModel : BindableBase
     {
-        private IContainerExtension _container;
-        private IRegionManager _regionManager;
+        private readonly IContainerExtension _container;
+        private readonly IDialogService _dialogService;
+        private readonly IRegionManager _regionManager;
+
         private IList<Project> _projects = new List<Project>();
+
         private Visibility _visibility = Visibility.Hidden;
 
         private int _selectedIndex = -1;
 
         public Project? SelectedBuilder;
 
-        public ProjectListViewModel(IContainerExtension container, IRegionManager regionManager)
+        public ProjectListViewModel(IContainerExtension container, IRegionManager regionManager, IDialogService dialogService)
         {
             _container = container;
+            _dialogService = dialogService;
             _regionManager = regionManager;
 
             Projects = ProjectHelper.GetProjects();
@@ -97,15 +102,9 @@ namespace ModMaker.Hub.ViewModels
         /// </summary>
         private void CreateProject()
         {
-            var v = new BaseDialogView();
+            _dialogService.Show(null, null, null, "DialogWindow");
 
-            _container.RegisterInstance(v);
-
-            BaseDialogViewModel.Command2 = new DelegateCommand(() => { Projects = ProjectHelper.GetProjects(); });
-
-            _regionManager.RegisterViewWithRegion("DialogContent", typeof(NewProjectView));
-
-            v.ShowDialog();
+            _regionManager.RegisterViewWithRegion("DialogWindowContent", typeof(NewProjectView));
         }
 
         /// <summary>

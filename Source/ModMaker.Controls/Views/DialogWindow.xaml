@@ -1,0 +1,11 @@
+﻿<hc:Window x:Class="ModMaker.Controls.Views.DialogWindow"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
+           xmlns:prism="http://prismlibrary.com/"
+           Width="800"
+           Height="450"
+           prism:ViewModelLocator.AutoWireViewModel="True"
+           Background="{StaticResource RegionBrush}"
+           ResizeMode="NoResize"
+           SizeToContent="WidthAndHeight" />
